@@ -28,12 +28,45 @@ namespace MarketList
                 return;
             }
 
-            var listaProdutosDisponiveis = produtosDisponiveis.Where(produto => args.Any(arg => produto.Nome.ToUpper() == arg.ToUpper()));
 
-            string msg = listaProdutosDisponiveis.Count() > 0 ? "Produtos disponíveis da lista:" : "Nenhum produto da lista está disposnível.";
-            Console.WriteLine(msg);
+            // Exibe os produtos disponíveis da lista
+            var listaProdutosDisponiveis = produtosDisponiveis.Where(produto => args.Any(arg => arg.ToUpper() == produto.Nome.ToUpper()));
 
-            foreach (var item in listaProdutosDisponiveis)
+            if (listaProdutosDisponiveis.Count() > 0)
+            {
+                Console.WriteLine("Produtos disponíveis da lista:");
+
+                foreach (var item in listaProdutosDisponiveis)
+                {
+                    Console.WriteLine(item.ExibirDadosProduto());
+                }
+            }
+
+            Console.WriteLine();
+
+
+            // Exibe os produtos da lista que não estão disponíveis
+            var listaProdutosNaoDisponiveis = args.Where(arg => !produtosDisponiveis.Any(produto => produto.Nome.ToUpper() == arg.ToUpper()));
+
+            if (listaProdutosNaoDisponiveis.Count() > 0)
+            {
+                Console.WriteLine("Produtos da lista não disponíveis:");
+
+                foreach (var item in listaProdutosNaoDisponiveis)
+                {
+                    Console.WriteLine($"# {item}");
+                }
+            }
+
+            Console.WriteLine();
+
+
+            // Exibe os produtos disponíveis ordenados por ordem nome
+            var produtosOrdendosPorNome = produtosDisponiveis.OrderBy(produto => produto.Nome).ToList();
+
+            Console.WriteLine("Produtos disponíveis ordenados por nome:");
+
+            foreach (var item in produtosOrdendosPorNome)
             {
                 Console.WriteLine(item.ExibirDadosProduto());
             }

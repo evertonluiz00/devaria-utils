@@ -7,7 +7,7 @@
 
         public string ExibirDadosProduto()
         {
-            return $"Produto: { Nome } - R$: { Preco }.";
+            return $"# { Nome } - R$: { Preco }.";
         }
     }
 }
